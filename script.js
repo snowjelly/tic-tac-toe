@@ -1,17 +1,18 @@
 const GameBoard = (() => {
   const board = [];
-  const signature = [];
 
   const getBoard = () => {
     return board;
   }
 
-  const getSignature = () => {
-    return signature;
-  }
-
   const check = () => {
-
+    if (board[0] === board[1] && board[1] === board[2]) {
+      TicTacToe.getPlayers().forEach(player => {
+        if (board[0] === player.input) {
+          return player.name + ' wins!';
+        }
+      });
+    }
   }
 
   const length = () => {
@@ -31,10 +32,11 @@ const DisplayController = (() => {
   };
 })();
 
-const Player = (name) => {
+const Player = (name, input) => {
     const player = {
       name,
-      turn: false
+      turn: false,
+      input
     }
 
     const get = () => {
@@ -66,8 +68,8 @@ const Player = (name) => {
 
 
 const TicTacToe = (() => {
-  const player1 = Player('snow');
-  const player2 = Player('jelly');
+  const player1 = Player('snow', 'X');
+  const player2 = Player('jelly', 'O');
 
   const getPlayers = () => {
     return [player1.get(), player2.get()];
