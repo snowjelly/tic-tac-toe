@@ -2,11 +2,23 @@ const GameBoard = (() => {
   const board = [];
   const signature = [];
 
-  const get = () => {
-    return {board, signature};
+  const getBoard = () => {
+    return board;
   }
 
-  return {get};
+  const getSignature = () => {
+    return signature;
+  }
+
+  const check = () => {
+
+  }
+
+  const length = () => {
+    return board.length;
+  }
+
+  return {getBoard, getSignature, check, length};
 })();
 
 const DisplayController = (() => {
@@ -22,8 +34,7 @@ const DisplayController = (() => {
 const Player = (name) => {
     const player = {
       name,
-      turn: false,
-      input: ''
+      turn: false
     }
 
     const get = () => {
@@ -40,10 +51,13 @@ const Player = (name) => {
     }
 
     const input = (input) => {
-      if (player.turn) {
-        GameBoard.get().board.push(input);
-        GameBoard.get().signature.push(player.name);
+      if (player.turn && GameBoard.length() < 9) {
+        GameBoard.getBoard().push(input);
+        GameBoard.getSignature().push(player.name);
         TicTacToe.nextTurn();
+        if (GameBoard.length() >= 3) {
+          GameBoard.check();
+        }
       }
     }
 
