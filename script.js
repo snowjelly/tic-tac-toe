@@ -1,5 +1,7 @@
 const GameBoard = (() => {
-  const board = [];
+  const board = ['X', 'O', 'X',
+                 'X', 'O', 'X',
+                 'X', 'O', 'X'];
 
   const getBoard = () => {
     return board;
@@ -19,7 +21,7 @@ const GameBoard = (() => {
     return board.length;
   }
 
-  return {getBoard, getSignature, check, length};
+  return {getBoard, check, length};
 })();
 
 const DisplayController = (() => {
@@ -52,9 +54,9 @@ const Player = (name, input) => {
       }
     }
 
-    const input = (input) => {
+    const play = () => {
       if (player.turn && GameBoard.length() < 9) {
-        GameBoard.getBoard().push(input);
+        GameBoard.getBoard().push(player.input);
         GameBoard.getSignature().push(player.name);
         TicTacToe.nextTurn();
         if (GameBoard.length() >= 3) {
@@ -63,7 +65,7 @@ const Player = (name, input) => {
       }
     }
 
-  return {get, updateTurn, input};
+  return {get, updateTurn, play};
 }
 
 
@@ -84,7 +86,7 @@ const TicTacToe = (() => {
   const start = () => {
     //while (GameBoard.get().length < 9) {
     player1.get().turn = true;
-    player1.input(prompt('It is now ' + player1.get().name + "'s turn. Enter an X or an O"));
+    player1.play();
   }
   return {getPlayers, start, nextTurn};
 })();
