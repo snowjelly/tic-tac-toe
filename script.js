@@ -1,16 +1,12 @@
 const GameBoard = (() => {
-  const gameBoard = [];
-  const boardSignature = [];
+  const board = [];
+  const signature = [];
 
   const get = () => {
-    return gameBoard;
+    return {board, signature};
   }
 
-  const getSignature = () => {
-    return boardSignature;
-  }
-
-  return {get, getSignature};
+  return {get};
 })();
 
 const DisplayController = (() => {
@@ -42,7 +38,16 @@ const Player = (name) => {
         player.turn = true;
       }
     }
-  return {get, updateTurn};
+
+    const input = (input) => {
+      if (player.turn) {
+        GameBoard.get().board.push(input);
+        GameBoard.get().signature.push(player.name);
+        TicTacToe.nextTurn();
+      }
+    }
+
+  return {get, updateTurn, input};
 }
 
 
@@ -63,6 +68,7 @@ const TicTacToe = (() => {
   const start = () => {
     //while (GameBoard.get().length < 9) {
     player1.get().turn = true;
+    player1.input(prompt('It is now ' + player1.get().name + "'s turn. Enter an X or an O"));
   }
   return {getPlayers, start, nextTurn};
 })();
