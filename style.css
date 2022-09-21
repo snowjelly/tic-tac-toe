@@ -45,7 +45,50 @@ table {
 }
 /*--- CSS reset ---*/
 
+:root {
+  --lime-300: #bef264;
+}
+
 body {
   display: grid;
   height: 100vh;
+  justify-content: center;
+  grid-template-rows: min-content 1fr 2fr;
+  gap: 1rem;
+  background-color: var(--lime-300);
+}
+
+.title h1 {
+  font-size: 4rem;
+  display: flex;
+  justify-content: center;
+}
+
+.info {
+  font-size: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+}
+
+.board-container {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 150px);
+  grid-template-rows: repeat(3, 150px);
+  gap: 3px;
+  background-color: black;
+  width: min-content;
+  height: min-content;
+}
+
+.board button {
+  background-color: var(--lime-300);
+  border: 0;
 }
