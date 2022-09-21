@@ -100,7 +100,10 @@ const DisplayController = (() => {
   }
 
   board.addEventListener('click', (event) => {
-    console.log(event.target);
+    if (event.target.textContent !== '') {
+      return;
+    }
+    event.target.textContent = TicTacToe.whosTurn().input;
     TicTacToe.nextTurn();
     updateInfo();
   });
