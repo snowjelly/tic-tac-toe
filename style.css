@@ -73,8 +73,12 @@ body {
   gap: 1rem;
 }
 
-.info span {
+.player-1 {
   color: white;
+}
+
+.player-2 {
+  color: #8b5cf6;
 }
 
 .board-container {

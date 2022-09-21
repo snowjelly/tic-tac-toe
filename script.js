@@ -83,11 +83,19 @@ const TicTacToe = (() => {
 const DisplayController = (() => {
   const board = document.querySelector('.board');
   const turnInfo = document.querySelector('.info');
+  let playerClassToggle = true;
+  let playerClass = '';
 
   const updateInfo = () => {
+    if (playerClassToggle) {
+      playerClass = 'player-1';
+    }
+    else {
+      playerClass = 'player-2';
+    }
     turnInfo.innerHTML = `
-    <h2><span>${TicTacToe.whosTurn().name}</span>'s Turn</h2>
-    <h3>Place your (<span>${TicTacToe.whosTurn().input}</span>)</h3>
+    <h2><span class="${playerClass}">${TicTacToe.whosTurn().name}</span>'s Turn</h2>
+    <h3>Place your (<span class="${playerClass}">${TicTacToe.whosTurn().input}</span>)</h3>
     `
   }
 
@@ -106,6 +114,14 @@ const DisplayController = (() => {
     }
     if (GameBoard.checkWin() || GameBoard.checkTie()) {
       return;
+    }
+    if (playerClassToggle) {
+      event.target.setAttribute('class', 'player-1');
+      playerClassToggle = false;
+    }
+    else {
+      event.target.setAttribute('class', 'player-2');
+      playerClassToggle = true;
     }
     event.target.textContent = TicTacToe.whosTurn().input;
     GameBoard.getBoard()[event.target.getAttribute('data-position')] = TicTacToe.whosTurn().input;
