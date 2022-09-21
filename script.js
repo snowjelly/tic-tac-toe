@@ -36,12 +36,8 @@ const Player = (name, input) => {
   }
 
   const updateTurn = () => {
-    if (player.turn === true) {
-      player.turn = false;
-    }
-    else if (player.turn === false){
-      player.turn = true;
-    }
+    if (player.turn === true) return player.turn = false;
+    return player.turn = true;
   }
 
   const play = () => {
@@ -66,46 +62,52 @@ const TicTacToe = (() => {
     return [player1.get(), player2.get()];
   }
 
-  const whosTurn = () => {
-    for (i=0;i<getPlayers().length;i++) {
-      if (getPlayers()[i].turn = true) {
-        return getPlayers()[i].name;
-      }
-    }
+  const start = () => {
+    player1.get().turn = true;
   }
-  
+
   const nextTurn = () => {
     player1.updateTurn();
     player2.updateTurn();
   }
 
-
-  const start = () => {
-    //while (GameBoard.get().length < 9) {
-    player1.get().turn = true;
+  const whosTurn = () => {
+    if (player1.get().turn) return player1.get();
+    return player2.get();
   }
+
   return {getPlayers, start, nextTurn, whosTurn};
 })();
 
 const DisplayController = (() => {
   const board = document.querySelector('.board');
-  const turnInfo = document.querySelector('.info h2');
-  board.addEventListener('click', (event) => {
-    console.log(event.target);
-    turnInfo.textContent = TicTacToe.whosTurn();
-  });
+  const turnInfo = document.querySelector('.info');
+
+  const updateInfo = () => {
+    turnInfo.innerHTML = `
+    <h2>${TicTacToe.whosTurn().name}'s Turn</h2>
+    <h3>Place your (${TicTacToe.whosTurn().input})</h3>
+    `
+  }
+
   const render = () => {
     for (i=0;i<9;i++) {
       const btn = document.createElement('button');
       btn.setAttribute('data-position', i.toString());
       board.appendChild(btn);
     }
-    turnInfo.textContent = TicTacToe.whosTurn();
+    updateInfo();
   }
+
+  board.addEventListener('click', (event) => {
+    console.log(event.target);
+    TicTacToe.nextTurn();
+    updateInfo();
+  });
 
   return {render};
 })();
 
 
-
+TicTacToe.start();
 DisplayController.render();
