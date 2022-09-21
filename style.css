@@ -70,6 +70,11 @@ body {
   flex-direction: column;
   justify-content: end;
   align-items: center;
+  gap: 1rem;
+}
+
+.info span {
+  color: white;
 }
 
 .board-container {
@@ -91,4 +96,8 @@ body {
 .board button {
   background-color: var(--lime-300);
   border: 0;
+  font-size: 9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
