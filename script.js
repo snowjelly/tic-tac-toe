@@ -25,13 +25,17 @@ const GameBoard = (() => {
 })();
 
 const DisplayController = (() => {
-  const getDisplay = () => {
-
-  };
-
-  const setDisplay = () => {
+  const board = document.querySelector('.board');
+  const render = () => {
+    for (i=0;i<9;i++) {
+      const btn = document.createElement('button');
+      btn.setAttribute('data-position', i.toString());
+      board.appendChild(btn);
+    }
     
-  };
+  }
+
+  return {render};
 })();
 
 const Player = (name, input) => {
@@ -68,7 +72,6 @@ const Player = (name, input) => {
   return {get, updateTurn, play};
 }
 
-
 const TicTacToe = (() => {
   const player1 = Player('snow', 'X');
   const player2 = Player('jelly', 'O');
@@ -90,3 +93,5 @@ const TicTacToe = (() => {
   }
   return {getPlayers, start, nextTurn};
 })();
+
+DisplayController.render();
