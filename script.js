@@ -1,7 +1,7 @@
 const GameBoard = (() => {
-  const board = ['X', 'O', 'X',
-                 'X', 'O', 'X',
-                 'X', 'O', 'X'];
+  const board = ['', '', '',
+                 '', '', '',
+                 '', '', ''];
 
   const getBoard = () => {
     return board;
@@ -104,6 +104,7 @@ const DisplayController = (() => {
       return;
     }
     event.target.textContent = TicTacToe.whosTurn().input;
+    GameBoard.getBoard()[event.target.getAttribute('data-position')] = TicTacToe.whosTurn().input;
     TicTacToe.nextTurn();
     updateInfo();
   });
