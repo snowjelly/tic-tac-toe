@@ -86,8 +86,8 @@ const DisplayController = (() => {
 
   const updateInfo = () => {
     turnInfo.innerHTML = `
-    <h2>${TicTacToe.whosTurn().name}'s Turn</h2>
-    <h3>Place your (${TicTacToe.whosTurn().input})</h3>
+    <h2><span>${TicTacToe.whosTurn().name}</span>'s Turn</h2>
+    <h3>Place your (<span>${TicTacToe.whosTurn().input}</span>)</h3>
     `
   }
 
