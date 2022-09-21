@@ -7,21 +7,22 @@ const GameBoard = (() => {
     return board;
   }
 
-  const check = () => {
-    if (board[0] === board[1] && board[1] === board[2]) {
-      TicTacToe.getPlayers().forEach(player => {
-        if (board[0] === player.input) {
-          return player.name + ' wins!';
-        }
-      });
+  const checkWin = () => {
+    if (board[0] === board[1] && board[1] === board[2] && board[0] !== '') {
+      console.log('victory!');
+      return true
     }
+  }
+
+  const checkTie = () => {
+
   }
 
   const length = () => {
     return board.length;
   }
 
-  return {getBoard, check, length};
+  return {getBoard, checkWin, length, checkTie};
 })();
 
 const Player = (name, input) => {
@@ -101,6 +102,9 @@ const DisplayController = (() => {
 
   board.addEventListener('click', (event) => {
     if (event.target.textContent !== '') {
+      return;
+    }
+    if (GameBoard.checkWin() || GameBoard.checkTie()) {
       return;
     }
     event.target.textContent = TicTacToe.whosTurn().input;
