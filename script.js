@@ -125,8 +125,20 @@ const TicTacToe = (() => {
           const colorIndex = event.target.children[i].getAttribute('style').indexOf('rgb');
           const playerColor = colorPickerStyle.slice(colorIndex);
         }
+        else if (event.target.children[i].getAttribute('style') === null) {
+          const defaultPlayer1Color = 'var(--violet-500);';
+        }
+      }
+      if (event.target.children[i].id === 'p1-name') {
+        const playerName = event.target.children[i].value;
+      }
+      if (event.target.children[i].id === 'p1-input') {
+        const playerInput = event.target.children[i].value;
       }
     }
+
+
+
   }
   form.addEventListener('submit', playerCreation);
 
