@@ -7,8 +7,14 @@ const GameBoard = (() => {
     return board;
   }
 
-  const horizontalWinCheck = (startPos) => {
+  const horizontalWin = (startPos) => {
     if (board[startPos] === board[startPos + 1] && board[startPos + 1] === board[startPos + 2] && board[startPos] !== '') {
+      return true;
+    }
+  }
+
+  const verticalWin = (startPos) => {
+    if (board[startPos] === board[startPos + 3] && board[startPos + 3] === board[startPos + 6] && board[startPos] !== '') {
       return true;
     }
   }
@@ -23,29 +29,19 @@ const GameBoard = (() => {
       if (i === 2) {
         startPos = 6;
       }
-      if (horizontalWinCheck(startPos)) return true;
+      if (horizontalWin(startPos)) return true;
     }
 
-    /* ['X', '', '',
-        'X', '', '',
-        'X', '', ''];
-    */
-    if (board[0] === board[3] && board[3] === board[6] && board[0] !== '') {
-      return true;
-    }
-    /* ['', 'X', '',
-        '', 'X', '',
-        '', 'X', ''];
-    */
-    if (board[1] === board[4] && board[4] === board[7] && board[1] !== '') {
-      return true;
-    }
-    /* ['', '', 'X',
-        '', '', 'X',
-        '', '', 'X'];
-    */
-    if (board[2] === board[5] && board[5] === board[8] && board[2] !== '') {
-      return true;
+    /* vertical check */
+    for (i=0;i<3;i++) {
+      let startPos = 0;
+      if (i === 1) {
+        startPos = 1;
+      }
+      if (i === 2) {
+        startPos = 2;
+      }
+      if (verticalWin(startPos)) return true;
     }
   }
 
