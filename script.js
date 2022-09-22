@@ -80,11 +80,12 @@ const GameBoard = (() => {
   return {getBoard, checkWin, length, checkTie};
 })();
 
-const Player = (name, input) => {
+const Player = (name, input, color) => {
   const player = {
     name,
     turn: false,
-    input
+    input,
+    color
   }
 
   const get = () => {
@@ -111,8 +112,23 @@ return {get, updateTurn, play};
 }
 
 const TicTacToe = (() => {
+  const form = document.querySelector('#form');
   const player1 = Player('snow', 'X');
   const player2 = Player('jelly', 'O');
+
+  const playerCreation = (event) => {
+    event.preventDefault();
+    for (i=0;i<event.target.children.length;i++) {
+      if (event.target.children[i].className === 'color-picker') {
+        if (event.target.children[i].getAttribute('style') !== null) {
+          const colorPickerStyle = event.target.children[i].getAttribute('style');
+          const colorIndex = event.target.children[i].getAttribute('style').indexOf('rgb');
+          const playerColor = colorPickerStyle.slice(colorIndex);
+        }
+      }
+    }
+  }
+  form.addEventListener('submit', playerCreation);
 
   const getPlayers = () => {
     return [player1.get(), player2.get()];
@@ -178,7 +194,7 @@ const DisplayController = (() => {
     turnInfo.setAttribute('class', 'info');
     body.appendChild(turnInfo);
     body.appendChild(board);
-    
+
     for (i=0;i<9;i++) {
       const btn = document.createElement('button');
       btn.setAttribute('data-position', i.toString());
