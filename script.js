@@ -68,7 +68,9 @@ const GameBoard = (() => {
   }
 
   const checkTie = () => {
-
+    if (board.includes('') === false) {
+      return true;
+    }
   }
 
   const length = () => {
@@ -159,6 +161,13 @@ const DisplayController = (() => {
     `
   }
 
+  const tieInfo = () => {
+    turnInfo.innerHTML = `
+    <h2>Game Over!</h2>
+    <h3>You tied!</h3>
+    `
+  }
+
   const render = () => {
     for (i=0;i<9;i++) {
       const btn = document.createElement('button');
@@ -187,6 +196,10 @@ const DisplayController = (() => {
     GameBoard.getBoard()[event.target.getAttribute('data-position')] = TicTacToe.whosTurn().input;
     if (GameBoard.checkWin()) {
       winInfo();
+      return;
+    }
+    if (GameBoard.checkTie()) {
+      tieInfo();
       return;
     }
     TicTacToe.nextTurn();
