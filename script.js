@@ -168,13 +168,22 @@ const DisplayController = (() => {
     `
   }
 
-  const render = () => {
+  const renderBoard = () => {
     for (i=0;i<9;i++) {
       const btn = document.createElement('button');
       btn.setAttribute('data-position', i.toString());
       board.appendChild(btn);
     }
     updateInfo();
+  }
+
+  const renderForm = () => {
+    const form = document.querySelector('#form');
+    const colorPicker = document.querySelector('.color-picker');
+    const picker = new Picker(colorPicker);
+    picker.onChange = function(color) {
+      colorPicker.style.backgroundColor = color.rgbaString;
+    }
   }
 
   board.addEventListener('click', (event) => {
@@ -206,9 +215,9 @@ const DisplayController = (() => {
     updateInfo();
   });
 
-  return {render};
+  return {renderBoard, renderForm};
 })();
 
 
 TicTacToe.start();
-DisplayController.render();
+DisplayController.renderForm();
