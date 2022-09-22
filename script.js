@@ -125,6 +125,7 @@ const DisplayController = (() => {
     }
     event.target.textContent = TicTacToe.whosTurn().input;
     GameBoard.getBoard()[event.target.getAttribute('data-position')] = TicTacToe.whosTurn().input;
+    GameBoard.checkWin();
     TicTacToe.nextTurn();
     updateInfo();
   });
