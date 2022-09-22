@@ -19,6 +19,19 @@ const GameBoard = (() => {
     }
   }
 
+  const diagonalWin = (startPos) => {
+    if (startPos === 2) {
+      if (board[startPos] === board[startPos * 2] && board[startPos * 2] === board[startPos * 3] && board[startPos] !== '') {
+        return true;
+      }
+    }
+    if (startPos === 0) {
+      if (board[startPos] === board[startPos + 4] && board[startPos + 4] === board[startPos + 8] && board[startPos] !== '') {
+        return true;
+      }
+    }
+  }
+
   const checkWin = () => {
     /* horizontal check */
     for (i=0;i<3;i++) {
@@ -42,6 +55,15 @@ const GameBoard = (() => {
         startPos = 2;
       }
       if (verticalWin(startPos)) return true;
+    }
+
+    /* diagonal check */
+    for (i=0;i<2;i++) {
+      let startPos = 0;
+      if (i === 1) {
+        startPos = 2;
+      }
+      if (diagonalWin(startPos)) return true;
     }
   }
 
