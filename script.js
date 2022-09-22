@@ -7,29 +7,25 @@ const GameBoard = (() => {
     return board;
   }
 
-  const checkWin = () => {
-    let startPos = 0;
-    /* ['X', 'X', 'X',
-        '', '', '',
-        '', '', ''];
-    */
+  const horizontalWinCheck = (startPos) => {
     if (board[startPos] === board[startPos + 1] && board[startPos + 1] === board[startPos + 2] && board[startPos] !== '') {
       return true;
     }
-    /* ['', '', '',
-        'X', 'X', 'X',
-        '', '', ''];
-    */
-    if (board[3] === board[4] && board[4] === board[5] && board[3] !== '') {
-      return true;
+  }
+
+  const checkWin = () => {
+    /* horizontal check */
+    for (i=0;i<3;i++) {
+      let startPos = 0;
+      if (i === 1) {
+        startPos = 3;
+      }
+      if (i === 2) {
+        startPos = 6;
+      }
+      if (horizontalWinCheck(startPos)) return true;
     }
-    /* ['', '', '',
-        '', '', '',
-        'X', 'X', 'X'];
-    */
-    if (board[6] === board[7] && board[7] === board[8] && board[6] !== '') {
-      return true;
-    }
+
     /* ['X', '', '',
         'X', '', '',
         'X', '', ''];
