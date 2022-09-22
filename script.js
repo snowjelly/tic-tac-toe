@@ -9,7 +9,6 @@ const GameBoard = (() => {
 
   const checkWin = () => {
     if (board[0] === board[1] && board[1] === board[2] && board[0] !== '') {
-      console.log('victory!');
       return true
     }
   }
@@ -99,6 +98,13 @@ const DisplayController = (() => {
     `
   }
 
+  const winInfo = () => {
+    turnInfo.innerHTML = `
+    <h2>Game Over!</h2>
+    <h3><span class="${playerClass}">${TicTacToe.whosTurn().name}</span> wins! (<span class="${playerClass}">${TicTacToe.whosTurn().input}</span>'s)</h3>
+    `
+  }
+
   const render = () => {
     for (i=0;i<9;i++) {
       const btn = document.createElement('button');
@@ -116,16 +122,19 @@ const DisplayController = (() => {
       return;
     }
     if (playerClassToggle) {
-      event.target.setAttribute('class', 'player-1');
+      event.target.setAttribute('class', playerClass);
       playerClassToggle = false;
     }
     else {
-      event.target.setAttribute('class', 'player-2');
+      event.target.setAttribute('class', playerClass);
       playerClassToggle = true;
     }
     event.target.textContent = TicTacToe.whosTurn().input;
     GameBoard.getBoard()[event.target.getAttribute('data-position')] = TicTacToe.whosTurn().input;
-    GameBoard.checkWin();
+    if (GameBoard.checkWin()) {
+      winInfo();
+      return;
+    }
     TicTacToe.nextTurn();
     updateInfo();
   });
