@@ -177,8 +177,7 @@ const DisplayController = (() => {
     updateInfo();
   }
 
-  const renderForm = () => {
-    const form = document.querySelector('#form');
+  const renderColorPicker = () => {
     const colorPicker = document.querySelector('.color-picker');
     const picker = new Picker(colorPicker);
     picker.onChange = function(color) {
@@ -215,9 +214,9 @@ const DisplayController = (() => {
     updateInfo();
   });
 
-  return {renderBoard, renderForm};
+  return {renderBoard, renderColorPicker};
 })();
 
 
 TicTacToe.start();
-DisplayController.renderForm();
+DisplayController.renderColorPicker();
