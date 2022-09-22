@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/vanilla-picker@2" defer></script>
   <script src="script.js" defer></script>
   <title>Tic Tac Toe</title>
 </head>
@@ -12,14 +13,22 @@
   <div class="title">
     <h1>Tic Tac Toe</h1>
   </div>
-  <div class="info">
-    <h2><span>(player:name)</span>'s Turn</h2>
-    <h3>Place your (<span>player:input</span>)</h3>
+  <div class="intro">
+    <form id="form">
+      <label for="p1-name">Name</label>
+      <input name="p1-name" id="p1-name" type="text" required>
+      <label for="p1-input">Input</label>
+      <select name="p1-input" id="p1-input">
+        <option value="X">X</option>
+        <option value="O">O</option>
+      </select>
+      <p>Color</p>
+      <div class="color-picker"></div>
+    </form>
   </div>
-  <div class="board-container">
-    <div class="board">
+  <div class="info collapse">
 
-    </div>
   </div>
+  <div class="board collapse"></div>
 </body>
 </html>
