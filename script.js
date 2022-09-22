@@ -136,8 +136,9 @@ const TicTacToe = (() => {
 })();
 
 const DisplayController = (() => {
-  const board = document.querySelector('.board');
-  const turnInfo = document.querySelector('.info');
+
+
+
   let playerClassToggle = true;
   let playerClass = '';
 
@@ -169,12 +170,49 @@ const DisplayController = (() => {
   }
 
   const renderBoard = () => {
+    const body = document.querySelector('body');
+    const board = document.createElement('div');
+    const turnInfo = document.createElement('div');
+  
+    board.setAttribute('class', 'board');
+    turnInfo.setAttribute('class', 'info');
+    body.appendChild(turnInfo);
+    body.appendChild(board);
+    
     for (i=0;i<9;i++) {
       const btn = document.createElement('button');
       btn.setAttribute('data-position', i.toString());
       board.appendChild(btn);
     }
     updateInfo();
+    board.addEventListener('click', (event) => {
+      if (event.target.textContent !== '') {
+        return;
+      }
+      if (GameBoard.checkWin() || GameBoard.checkTie()) {
+        return;
+      }
+      if (playerClassToggle) {
+        event.target.setAttribute('class', playerClass);
+        playerClassToggle = false;
+      }
+      else {
+        event.target.setAttribute('class', playerClass);
+        playerClassToggle = true;
+      }
+      event.target.textContent = TicTacToe.whosTurn().input;
+      GameBoard.getBoard()[event.target.getAttribute('data-position')] = TicTacToe.whosTurn().input;
+      if (GameBoard.checkWin()) {
+        winInfo();
+        return;
+      }
+      if (GameBoard.checkTie()) {
+        tieInfo();
+        return;
+      }
+      TicTacToe.nextTurn();
+      updateInfo();
+    });
   }
 
   const renderColorPicker = () => {
@@ -184,35 +222,8 @@ const DisplayController = (() => {
       colorPicker.style.backgroundColor = color.rgbaString;
     }
   }
-
-  board.addEventListener('click', (event) => {
-    if (event.target.textContent !== '') {
-      return;
-    }
-    if (GameBoard.checkWin() || GameBoard.checkTie()) {
-      return;
-    }
-    if (playerClassToggle) {
-      event.target.setAttribute('class', playerClass);
-      playerClassToggle = false;
-    }
-    else {
-      event.target.setAttribute('class', playerClass);
-      playerClassToggle = true;
-    }
-    event.target.textContent = TicTacToe.whosTurn().input;
-    GameBoard.getBoard()[event.target.getAttribute('data-position')] = TicTacToe.whosTurn().input;
-    if (GameBoard.checkWin()) {
-      winInfo();
-      return;
-    }
-    if (GameBoard.checkTie()) {
-      tieInfo();
-      return;
-    }
-    TicTacToe.nextTurn();
-    updateInfo();
-  });
+// <div class="board collapse"></div>
+  
 
   return {renderBoard, renderColorPicker};
 })();

@@ -52,10 +52,9 @@ table {
 body {
   display: grid;
   height: 100vh;
-  justify-content: center;
-
   gap: 1rem;
   background-color: var(--lime-300);
+  grid-template-rows: max-content;
 }
 
 .title h1 {
@@ -113,17 +112,20 @@ body {
 
 #form {
   display: grid;
-  gap: 1rem;
+  grid-template-columns: auto auto;
   font-size: 2rem;
+  column-gap: 1rem;
   background-color: white;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  padding: 1rem;
   border-radius: 2rem;
-}
-
-#p1-input {
-  justify-self: start;
+  height: 100%;
+  width: 20%;
+  min-width: fit-content;
+  margin: 1rem;
+  max-height: 50%;
+  min-height: fit-content;
+  padding: 1rem;
 }
 
 .color-picker {
@@ -132,4 +134,16 @@ body {
   border-radius: 1rem;
   background-color: #8b5cf6;
   border: 1px solid black;
+}
+
+.form-container {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  grid-template-rows: min-content 1fr;
+  height: 100%;
+}
+
+.intro h1 {
+  font-size: 2.5rem;
 }
