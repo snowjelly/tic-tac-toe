@@ -152,8 +152,10 @@ const TicTacToe = (() => {
   const formSubmission = (event) => {
     event.preventDefault();
     playerCreation(event);
+    DisplayController.renderFormHeader();
     if (playerCount === 2) {
-      console.log(getPlayers());
+      DisplayController.removeIntro();
+      DisplayController.renderBoard();
     }
   }
 
@@ -182,48 +184,31 @@ const TicTacToe = (() => {
 })();
 
 const DisplayController = (() => {
-
-
-
   let playerClassToggle = true;
   let playerClass = '';
+  const turnInfo = document.createElement('div');
 
-  const updateInfo = () => {
-    if (playerClassToggle) {
-      playerClass = 'player-1';
-    }
-    else {
-      playerClass = 'player-2';
-    }
-    turnInfo.innerHTML = `
-    <h2><span class="${playerClass}">${TicTacToe.whosTurn().name}</span>'s Turn</h2>
-    <h3>Place your (<span class="${playerClass}">${TicTacToe.whosTurn().input}</span>)</h3>
-    `
+  const renderFormHeader = () => {
+    const formHeader = document.querySelector('.form-container h1');
+    formHeader.textContent = 'Player 2';
   }
 
-  const winInfo = () => {
-    turnInfo.innerHTML = `
-    <h2>Game Over!</h2>
-    <h3><span class="${playerClass}">${TicTacToe.whosTurn().name}</span> wins! (<span class="${playerClass}">${TicTacToe.whosTurn().input}</span>'s)</h3>
-    `
-  }
-
-  const tieInfo = () => {
-    turnInfo.innerHTML = `
-    <h2>Game Over!</h2>
-    <h3>You tied!</h3>
-    `
+  const removeIntro = () => {
+    const intro = document.querySelector('.intro');
+    intro.remove();
   }
 
   const renderBoard = () => {
     const body = document.querySelector('body');
+    const boardContainer = document.createElement('div');
     const board = document.createElement('div');
-    const turnInfo = document.createElement('div');
-  
+
+    boardContainer.setAttribute('class', 'board-container');
     board.setAttribute('class', 'board');
     turnInfo.setAttribute('class', 'info');
     body.appendChild(turnInfo);
-    body.appendChild(board);
+    body.appendChild(boardContainer);
+    boardContainer.appendChild(board);
 
     for (i=0;i<9;i++) {
       const btn = document.createElement('button');
@@ -261,6 +246,33 @@ const DisplayController = (() => {
     });
   }
 
+  const updateInfo = () => {
+    if (playerClassToggle) {
+      playerClass = 'player-1';
+    }
+    else {
+      playerClass = 'player-2';
+    }
+    turnInfo.innerHTML = `
+    <h2><span class="${playerClass}">${TicTacToe.whosTurn().name}</span>'s Turn</h2>
+    <h3>Place your (<span class="${playerClass}">${TicTacToe.whosTurn().input}</span>)</h3>
+    `
+  }
+
+  const winInfo = () => {
+    turnInfo.innerHTML = `
+    <h2>Game Over!</h2>
+    <h3><span class="${playerClass}">${TicTacToe.whosTurn().name}</span> wins! (<span class="${playerClass}">${TicTacToe.whosTurn().input}</span>'s)</h3>
+    `
+  }
+
+  const tieInfo = () => {
+    turnInfo.innerHTML = `
+    <h2>Game Over!</h2>
+    <h3>You tied!</h3>
+    `
+  }
+
   const renderColorPicker = () => {
     const colorPicker = document.querySelector('.color-picker');
     const picker = new Picker(colorPicker);
@@ -271,7 +283,7 @@ const DisplayController = (() => {
 // <div class="board collapse"></div>
   
 
-  return {renderBoard, renderColorPicker};
+  return {renderBoard, renderColorPicker, renderFormHeader, removeIntro};
 })();
 
 
