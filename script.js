@@ -113,34 +113,52 @@ return {get, updateTurn, play};
 
 const TicTacToe = (() => {
   const form = document.querySelector('#form');
-  const player1 = Player('snow', 'X');
-  const player2 = Player('jelly', 'O');
-
+  let player1;
+  let player2;
+  let playerName;
+  let playerInput;
+  let playerColor;
+  let playerCount = 0;
   const playerCreation = (event) => {
-    event.preventDefault();
-    for (i=0;i<event.target.children.length;i++) {
-      if (event.target.children[i].className === 'color-picker') {
-        if (event.target.children[i].getAttribute('style') !== null) {
-          const colorPickerStyle = event.target.children[i].getAttribute('style');
-          const colorIndex = event.target.children[i].getAttribute('style').indexOf('rgb');
-          const playerColor = colorPickerStyle.slice(colorIndex);
+    if (playerCount < 2) {
+      for (i=0;i<event.target.children.length;i++) {
+        if (event.target.children[i].id === 'p1-name') {
+          playerName = event.target.children[i].value;
         }
-        else if (event.target.children[i].getAttribute('style') === null) {
-          const defaultPlayer1Color = 'var(--violet-500);';
+        if (event.target.children[i].id === 'p1-input') {
+          playerInput = event.target.children[i].value;
+        }
+        if (event.target.children[i].className === 'color-picker') {
+          if (event.target.children[i].getAttribute('style') !== null) {
+            const colorPickerStyle = event.target.children[i].getAttribute('style');
+            const colorIndex = event.target.children[i].getAttribute('style').indexOf('rgb');
+            playerColor = colorPickerStyle.slice(colorIndex);
+          }
+          else if (event.target.children[i].getAttribute('style') === null) {
+            playerColor = 'var(--violet-500);';
+          }
         }
       }
-      if (event.target.children[i].id === 'p1-name') {
-        const playerName = event.target.children[i].value;
+      if (playerCount === 0) {
+        player1 = Player(playerName, playerInput, playerColor);
       }
-      if (event.target.children[i].id === 'p1-input') {
-        const playerInput = event.target.children[i].value;
+      if (playerCount === 1) {
+        player2 = Player(playerName, playerInput, playerColor);
       }
+      playerCount++;
     }
-
-
-
   }
-  form.addEventListener('submit', playerCreation);
+
+  const formSubmission = (event) => {
+    event.preventDefault();
+    playerCreation(event);
+    if (playerCount === 2) {
+      console.log(getPlayers());
+    }
+  }
+
+
+  form.addEventListener('submit', formSubmission);
 
   const getPlayers = () => {
     return [player1.get(), player2.get()];
@@ -160,7 +178,7 @@ const TicTacToe = (() => {
     return player2.get();
   }
 
-  return {getPlayers, start, nextTurn, whosTurn};
+  return {getPlayers, start, nextTurn, whosTurn, player1};
 })();
 
 const DisplayController = (() => {
@@ -257,5 +275,5 @@ const DisplayController = (() => {
 })();
 
 
-TicTacToe.start();
+
 DisplayController.renderColorPicker();
