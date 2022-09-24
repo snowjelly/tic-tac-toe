@@ -74,11 +74,7 @@ body {
   gap: 1rem;
 }
 
-.player-1 {
-  color: white;
-}
-
-.player-2 {
+.default-player-color {
   color: var(--violet-500);
 }
 
