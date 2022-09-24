@@ -102,6 +102,10 @@ return {get, updateTurn};
 
 const TicTacToe = (() => {
   const form = document.querySelector('#form');
+  const formName = document.querySelector('#name');
+  const formInput = document.querySelector('#input');
+  formName.value = '';
+  formInput.value = '';
   let player1;
   let player2;
   let playerName;
@@ -153,6 +157,7 @@ const TicTacToe = (() => {
       TicTacToe.start();
       DisplayController.renderFormHeader();
       DisplayController.removeP2InputChoice(player1Input);
+      formName.value = '';
     }
     if (playerCount === 2) {
       DisplayController.removeIntro();
