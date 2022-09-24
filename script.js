@@ -97,18 +97,7 @@ const Player = (name, input, color) => {
     return player.turn = true;
   }
 
-  const play = () => {
-    if (player.turn && GameBoard.length() < 9) {
-      GameBoard.getBoard().push(player.input);
-      GameBoard.getSignature().push(player.name);
-      TicTacToe.nextTurn();
-      if (GameBoard.length() >= 3) {
-        GameBoard.check();
-      }
-    }
-  }
-
-return {get, updateTurn, play};
+return {get, updateTurn};
 }
 
 const TicTacToe = (() => {
@@ -120,7 +109,6 @@ const TicTacToe = (() => {
   let playerColor;
   let playerCount = 0;
   let player1Input;
-  let player2Input;
   const playerCreation = (event) => {
     if (playerCount < 2) {
       for (i=0;i<event.target.children.length;i++) {
@@ -163,6 +151,7 @@ const TicTacToe = (() => {
     playerCreation(event);
     DisplayController.renderFormHeader();
     if (playerCount === 1) {
+      TicTacToe.start();
       DisplayController.removeP2InputChoice(player1Input);
     }
     if (playerCount === 2) {
@@ -245,11 +234,11 @@ const DisplayController = (() => {
         return;
       }
       if (playerClassToggle) {
-        event.target.setAttribute('class', playerClass);
+        event.target.setAttribute('style', 'color: ' + TicTacToe.whosTurn().color);
         playerClassToggle = false;
       }
       else {
-        event.target.setAttribute('class', playerClass);
+        event.target.setAttribute('style', 'color: ' + TicTacToe.whosTurn().color);
         playerClassToggle = true;
       }
       event.target.textContent = TicTacToe.whosTurn().input;
@@ -275,15 +264,15 @@ const DisplayController = (() => {
       playerClass = 'player-2';
     }
     turnInfo.innerHTML = `
-    <h2><span class="${playerClass}">${TicTacToe.whosTurn().name}</span>'s Turn</h2>
-    <h3>Place your (<span class="${playerClass}">${TicTacToe.whosTurn().input}</span>)</h3>
+    <h2><span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().name}</span>'s Turn</h2>
+    <h3>Place your (<span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().input}</span>)</h3>
     `
   }
 
   const winInfo = () => {
     turnInfo.innerHTML = `
     <h2>Game Over!</h2>
-    <h3><span class="${playerClass}">${TicTacToe.whosTurn().name}</span> wins! (<span class="${playerClass}">${TicTacToe.whosTurn().input}</span>'s)</h3>
+    <h3><span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().name}</span> wins! (<span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().input}</span>'s)</h3>
     `
   }
 
