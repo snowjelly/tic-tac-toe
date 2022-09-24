@@ -149,9 +149,9 @@ const TicTacToe = (() => {
   const formSubmission = (event) => {
     event.preventDefault();
     playerCreation(event);
-    DisplayController.renderFormHeader();
     if (playerCount === 1) {
       TicTacToe.start();
+      DisplayController.renderFormHeader();
       DisplayController.removeP2InputChoice(player1Input);
     }
     if (playerCount === 2) {
