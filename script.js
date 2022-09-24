@@ -188,9 +188,9 @@ const DisplayController = (() => {
   let playerClassToggle = true;
   let playerClass = '';
   const turnInfo = document.createElement('div');
+  const formHeader = document.querySelector('.form-container h1');
 
   const renderFormHeader = () => {
-    const formHeader = document.querySelector('.form-container h1');
     formHeader.textContent = 'Player 2';
   }
 
@@ -288,6 +288,7 @@ const DisplayController = (() => {
     const picker = new Picker(colorPicker);
     picker.onChange = function(color) {
       colorPicker.style.backgroundColor = color.rgbaString;
+      formHeader.style.color = color.rgbaString;
     }
   }
 // <div class="board collapse"></div>
