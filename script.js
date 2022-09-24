@@ -112,10 +112,10 @@ const TicTacToe = (() => {
   const playerCreation = (event) => {
     if (playerCount < 2) {
       for (i=0;i<event.target.children.length;i++) {
-        if (event.target.children[i].id === 'p1-name') {
+        if (event.target.children[i].id === 'name') {
           playerName = event.target.children[i].value;
         }
-        if (event.target.children[i].id === 'p1-input') {
+        if (event.target.children[i].id === 'input') {
           if (playerCount === 0) {
             playerInput = event.target.children[i].value;
             player1Input = playerInput;
@@ -200,7 +200,7 @@ const DisplayController = (() => {
   }
 
   const removeP2InputChoice = ([player1Input]) => {
-    const formInput = document.querySelector('#p1-input');
+    const formInput = document.querySelector('#input');
     for (i=0;i<formInput.children.length;i++) {
       if (formInput.children[i].value === player1Input) {
         formInput.children[i].remove();
