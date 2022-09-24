@@ -119,6 +119,8 @@ const TicTacToe = (() => {
   let playerInput;
   let playerColor;
   let playerCount = 0;
+  let player1Input;
+  let player2Input;
   const playerCreation = (event) => {
     if (playerCount < 2) {
       for (i=0;i<event.target.children.length;i++) {
@@ -126,7 +128,14 @@ const TicTacToe = (() => {
           playerName = event.target.children[i].value;
         }
         if (event.target.children[i].id === 'p1-input') {
-          playerInput = event.target.children[i].value;
+          if (playerCount === 0) {
+            playerInput = event.target.children[i].value;
+            player1Input = playerInput;
+          }
+          if (playerCount === 1) {
+            playerInput = event.target.children[i].value;
+            player2Input = playerInput;
+          }
         }
         if (event.target.children[i].className === 'color-picker') {
           if (event.target.children[i].getAttribute('style') !== null) {
@@ -153,6 +162,9 @@ const TicTacToe = (() => {
     event.preventDefault();
     playerCreation(event);
     DisplayController.renderFormHeader();
+    if (playerCount === 1) {
+      DisplayController.removeP2InputChoice(player1Input);
+    }
     if (playerCount === 2) {
       DisplayController.removeIntro();
       DisplayController.renderBoard();
@@ -180,7 +192,7 @@ const TicTacToe = (() => {
     return player2.get();
   }
 
-  return {getPlayers, start, nextTurn, whosTurn, player1};
+  return {getPlayers, start, nextTurn, whosTurn};
 })();
 
 const DisplayController = (() => {
@@ -196,6 +208,15 @@ const DisplayController = (() => {
   const removeIntro = () => {
     const intro = document.querySelector('.intro');
     intro.remove();
+  }
+
+  const removeP2InputChoice = ([player1Input]) => {
+    const formInput = document.querySelector('#p1-input');
+    for (i=0;i<formInput.children.length;i++) {
+      if (formInput.children[i].value === player1Input) {
+        formInput.children[i].remove();
+      }
+    }
   }
 
   const renderBoard = () => {
@@ -283,7 +304,7 @@ const DisplayController = (() => {
 // <div class="board collapse"></div>
   
 
-  return {renderBoard, renderColorPicker, renderFormHeader, removeIntro};
+  return {renderBoard, renderColorPicker, renderFormHeader, removeIntro, removeP2InputChoice};
 })();
 
 
