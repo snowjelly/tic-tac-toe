@@ -158,6 +158,7 @@ const TicTacToe = (() => {
       DisplayController.renderFormHeader();
       DisplayController.removeP2InputChoice(player1Input);
       formName.value = '';
+      DisplayController.colorResetColorPicker();
     }
     if (playerCount === 2) {
       DisplayController.removeIntro();
@@ -194,9 +195,11 @@ const DisplayController = (() => {
   let playerClass = '';
   const turnInfo = document.createElement('div');
   const formHeader = document.querySelector('.form-container h1');
+  const colorPicker = document.querySelector('.color-picker');
 
   const renderFormHeader = () => {
     formHeader.textContent = 'Player 2';
+    formHeader.style.color = '';
   }
 
   const removeIntro = () => {
@@ -289,7 +292,6 @@ const DisplayController = (() => {
   }
 
   const renderColorPicker = () => {
-    const colorPicker = document.querySelector('.color-picker');
     const picker = new Picker(colorPicker);
     picker.onChange = function(color) {
       colorPicker.style.backgroundColor = color.rgbaString;
@@ -298,8 +300,10 @@ const DisplayController = (() => {
   }
 // <div class="board collapse"></div>
   
-
-  return {renderBoard, renderColorPicker, renderFormHeader, removeIntro, removeP2InputChoice};
+  const colorResetColorPicker = () => {
+    colorPicker.style.backgroundColor = '';
+  }
+  return {renderBoard, renderColorPicker, renderFormHeader, removeIntro, removeP2InputChoice, colorResetColorPicker};
 })();
 
 
