@@ -1,10 +1,16 @@
 const GameBoard = (() => {
-  const board = ['', '', '',
+  let board = ['', '', '',
                  '', '', '',
                  '', '', ''];
 
   const getBoard = () => {
     return board;
+  }
+
+  const resetBoard = () => {
+    board = ['', '', '',
+             '', '', '',
+             '', '', ''];
   }
 
   const horizontalWin = (startPos) => {
@@ -77,7 +83,7 @@ const GameBoard = (() => {
     return board.length;
   }
 
-  return {getBoard, checkWin, length, checkTie};
+  return {getBoard, checkWin, length, checkTie, resetBoard};
 })();
 
 const Player = (name, input, color) => {
@@ -107,8 +113,10 @@ const DisplayController = (() => {
   const formContainer = document.createElement('div');
   const formHeader = document.createElement('h1');
   const form = document.createElement('form');
+  const boardContainer = document.createElement('div');
+  const board = document.createElement('div');
+  const intro = document.createElement('div');
 
-  const intro = document.querySelector('.intro');
   const body = document.querySelector('body');
 
   const renderFormHeader = () => {
@@ -117,10 +125,12 @@ const DisplayController = (() => {
   }
 
   const renderForm = () => {
+    intro.setAttribute('class', 'intro');
     formContainer.setAttribute('class', 'form-container');
     formHeader.textContent = 'Player 1';
     form.setAttribute('id', 'form');
 
+    body.appendChild(intro);
     intro.appendChild(formContainer);
     formContainer.appendChild(formHeader);
     formContainer.appendChild(form);
@@ -157,9 +167,6 @@ const DisplayController = (() => {
   }
 
   const renderBoard = () => {
-    const boardContainer = document.createElement('div');
-    const board = document.createElement('div');
-
     boardContainer.setAttribute('class', 'board-container');
     board.setAttribute('class', 'board');
     turnInfo.setAttribute('class', 'info');
@@ -173,6 +180,7 @@ const DisplayController = (() => {
       board.appendChild(btn);
     }
     updateInfo();
+
     board.addEventListener('click', (event) => {
       if (event.target.textContent !== '') {
         return;
@@ -190,12 +198,14 @@ const DisplayController = (() => {
       }
       event.target.textContent = TicTacToe.whosTurn().input;
       GameBoard.getBoard()[event.target.getAttribute('data-position')] = TicTacToe.whosTurn().input;
-      if (GameBoard.checkWin()) {
-        winInfo();
-        return;
-      }
-      if (GameBoard.checkTie()) {
-        tieInfo();
+      if (GameBoard.checkWin() || GameBoard.checkTie()) {
+        if (GameBoard.checkWin()) {
+          winInfo();
+        }
+        if (GameBoard.checkTie()) {
+          tieInfo();
+        }
+        renderPlayAgainBtn();
         return;
       }
       TicTacToe.nextTurn();
@@ -253,7 +263,27 @@ const DisplayController = (() => {
     const formName = document.querySelector('#name');
     formName.value = '';
   }
-  return {renderBoard, renderColorPicker, renderForm, resetForm, renderFormHeader, removeIntro, removeP2InputChoice, resetColorPicker, getForm};
+
+  const reset = () => {
+    body.removeChild(turnInfo);
+    body.removeChild(boardContainer);
+  }
+
+  const playAgain = () => {
+    reset();
+    GameBoard.resetBoard();
+    renderForm();
+  }
+
+  const renderPlayAgainBtn = () => {
+    const playAgainBtn = document.createElement('button');
+    playAgainBtn.setAttribute('class', 'play-again-btn');
+    playAgainBtn.textContent = 'Play again';
+    boardContainer.appendChild(playAgainBtn);
+    playAgainBtn.addEventListener('click', playAgain);
+  }
+
+  return {renderBoard, renderColorPicker, renderForm, resetForm, renderFormHeader, removeIntro, removeP2InputChoice, resetColorPicker, getForm, reset};
 })();
 
 const TicTacToe = (() => {

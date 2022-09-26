@@ -76,7 +76,8 @@ body {
 
 .board-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   padding: 1rem;
 }
 
@@ -145,4 +146,13 @@ body {
 
 .intro h1 {
   font-size: 2.5rem;
+}
+
+.play-again-btn {
+  font-size: 2rem;
+  border: 0;
+  background-color: var(--sky-300);
+  height: 50px;
+  width: 100%;
+  color: white;
 }
