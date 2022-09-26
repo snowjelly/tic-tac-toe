@@ -136,6 +136,7 @@ const DisplayController = (() => {
     <div class="color-picker"></div>
     <button>Join game</button>
     `
+    renderColorPicker();
   }
 
   const getForm = () => {
@@ -342,5 +343,4 @@ const TicTacToe = (() => {
 
 
 DisplayController.renderForm();
-DisplayController.renderColorPicker();
 
