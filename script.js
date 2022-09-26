@@ -135,9 +135,6 @@ const TicTacToe = (() => {
             const colorIndex = event.target.children[i].getAttribute('style').indexOf('rgb');
             playerColor = colorPickerStyle.slice(colorIndex);
           }
-          else if (event.target.children[i].getAttribute('style') === null) {
-            playerColor = 'var(--violet-500);';
-          }
         }
       }
       if (playerCount === 0) {
@@ -298,7 +295,6 @@ const DisplayController = (() => {
       formHeader.style.color = color.rgbaString;
     }
   }
-// <div class="board collapse"></div>
   
   const colorResetColorPicker = () => {
     colorPicker.style.backgroundColor = '';
