@@ -110,7 +110,6 @@ const DisplayController = (() => {
 
   const intro = document.querySelector('.intro');
   const body = document.querySelector('body');
-  const colorPicker = document.querySelector('.color-picker');
 
   const renderFormHeader = () => {
     formHeader.textContent = 'Player 2';
@@ -231,17 +230,29 @@ const DisplayController = (() => {
   }
 
   const renderColorPicker = () => {
+    const colorPicker = getColorPicker();
     const picker = new Picker(colorPicker);
     picker.onChange = function(color) {
       colorPicker.style.backgroundColor = color.rgbaString;
       formHeader.style.color = color.rgbaString;
     }
   }
+
+  const getColorPicker = () => {
+    const colorPicker = document.querySelector('.color-picker');
+    return colorPicker;
+  }
   
-  const colorResetColorPicker = () => {
+  const resetColorPicker = () => {
+    const colorPicker = getColorPicker();
     colorPicker.style.backgroundColor = '';
   }
-  return {renderBoard, renderColorPicker, renderForm, renderFormHeader, removeIntro, removeP2InputChoice, colorResetColorPicker, getForm};
+
+  const resetForm = () => {
+    const formName = document.querySelector('#name');
+    formName.value = '';
+  }
+  return {renderBoard, renderColorPicker, renderForm, resetForm, renderFormHeader, removeIntro, removeP2InputChoice, resetColorPicker, getForm};
 })();
 
 const TicTacToe = (() => {
@@ -254,8 +265,6 @@ const TicTacToe = (() => {
   let player1Input;
 
   const form = DisplayController.getForm();
-  const formName = document.querySelector('#name');
-  const formInput = document.querySelector('#input');
 
   const playerCreation = (event) => {
     if (playerCount < 2) {
@@ -298,8 +307,8 @@ const TicTacToe = (() => {
       TicTacToe.start();
       DisplayController.renderFormHeader();
       DisplayController.removeP2InputChoice(player1Input);
-      formName.value = '';
-      DisplayController.colorResetColorPicker();
+      DisplayController.resetForm();
+      DisplayController.resetColorPicker();
     }
     if (playerCount === 2) {
       DisplayController.removeIntro();
