@@ -188,14 +188,7 @@ const DisplayController = (() => {
       if (GameBoard.checkWin() || GameBoard.checkTie()) {
         return;
       }
-      if (playerClassToggle) {
-        event.target.setAttribute('style', 'color: ' + TicTacToe.whosTurn().color);
-        playerClassToggle = false;
-      }
-      else {
-        event.target.setAttribute('style', 'color: ' + TicTacToe.whosTurn().color);
-        playerClassToggle = true;
-      }
+      event.target.setAttribute('style', 'color: ' + TicTacToe.whosTurn().color);
       event.target.textContent = TicTacToe.whosTurn().input;
       GameBoard.getBoard()[event.target.getAttribute('data-position')] = TicTacToe.whosTurn().input;
       if (GameBoard.checkWin() || GameBoard.checkTie()) {
@@ -214,12 +207,6 @@ const DisplayController = (() => {
   }
 
   const updateInfo = () => {
-    if (playerClassToggle) {
-      playerClass = 'player-1';
-    }
-    else {
-      playerClass = 'player-2';
-    }
     turnInfo.innerHTML = `
     <h2><span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().name}</span>'s Turn</h2>
     <h3>Place your (<span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().input}</span>)</h3>
