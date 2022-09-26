@@ -157,6 +157,7 @@ const DisplayController = (() => {
     <button>Join game</button>
     `
     renderColorPicker();
+    form.addEventListener('submit', formSubmission);
   }
 
   const getForm = () => {
@@ -357,8 +358,6 @@ const TicTacToe = (() => {
     }
   }
 
-  form.addEventListener('submit', formSubmission);
-
   const getPlayers = () => {
     return [player1.get(), player2.get()];
   }
@@ -377,7 +376,7 @@ const TicTacToe = (() => {
     return player2.get();
   }
 
-  return {getPlayers, start, nextTurn, whosTurn};
+  return {getPlayers, start, nextTurn, whosTurn, formSubmission};
 })();
 
 
