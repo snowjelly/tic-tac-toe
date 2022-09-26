@@ -107,34 +107,37 @@ return {get, updateTurn};
 }
 
 const DisplayController = (() => {
-  let playerClassToggle = true;
-  let playerClass = '';
-  const turnInfo = document.createElement('div');
-  const formContainer = document.createElement('div');
-  const formHeader = document.createElement('h1');
-  const form = document.createElement('form');
-  const boardContainer = document.createElement('div');
-  const board = document.createElement('div');
-  const intro = document.createElement('div');
+
 
   const body = document.querySelector('body');
 
+  const getElements = () => {
+    const turnInfo = document.createElement('div');
+    const formContainer = document.createElement('div');
+    const formHeader = document.createElement('h1');
+    const form = document.createElement('form');
+    const boardContainer = document.createElement('div');
+    const board = document.createElement('div');
+    const intro = document.createElement('div');
+    return {turnInfo, formContainer, formHeader, form, boardContainer, board, intro}
+  }
+
   const renderFormHeader = () => {
-    formHeader.textContent = 'Player 2';
-    formHeader.style.color = '';
+    getElements().formHeader.textContent = 'Player 2';
+    getElements().formHeader.style.color = '';
   }
 
   const renderForm = () => {
-    intro.setAttribute('class', 'intro');
-    formContainer.setAttribute('class', 'form-container');
-    formHeader.textContent = 'Player 1';
-    form.setAttribute('id', 'form');
+    getElements().intro.setAttribute('class', 'intro');
+    getElements().formContainer.setAttribute('class', 'form-container');
+    getElements().formHeader.textContent = 'Player 1';
+    getElements().form.setAttribute('id', 'form');
 
-    body.appendChild(intro);
-    intro.appendChild(formContainer);
-    formContainer.appendChild(formHeader);
-    formContainer.appendChild(form);
-    form.innerHTML = `
+    body.appendChild(getElements().intro);
+    getElements().intro.appendChild(formContainer);
+    getElements().formContainer.appendChild(getElements().formHeader);
+    getElements().formContainer.appendChild(form);
+    getElements().form.innerHTML = `
     <label for="name">Name</label>
     <input name="name" id="name" type="text" required>
     <label for="input">Input</label>
@@ -150,11 +153,11 @@ const DisplayController = (() => {
   }
 
   const getForm = () => {
-    return form;
+    return getElements().form;
   }
 
   const removeIntro = () => {
-    intro.remove();
+    getElements().intro.remove();
   }
 
   const removeP2InputChoice = ([player1Input]) => {
@@ -167,21 +170,21 @@ const DisplayController = (() => {
   }
 
   const renderBoard = () => {
-    boardContainer.setAttribute('class', 'board-container');
-    board.setAttribute('class', 'board');
-    turnInfo.setAttribute('class', 'info');
-    body.appendChild(turnInfo);
-    body.appendChild(boardContainer);
-    boardContainer.appendChild(board);
+    getElements().boardContainer.setAttribute('class', 'board-container');
+    getElements().board.setAttribute('class', 'board');
+    getElements().turnInfo.setAttribute('class', 'info');
+    body.appendChild(getElements().turnInfo);
+    body.appendChild(getElements().boardContainer);
+    getElements().boardContainer.appendChild(getElements().board);
 
     for (i=0;i<9;i++) {
       const btn = document.createElement('button');
       btn.setAttribute('data-position', i.toString());
-      board.appendChild(btn);
+      getElements().board.appendChild(btn);
     }
     updateInfo();
 
-    board.addEventListener('click', (event) => {
+    getElements().board.addEventListener('click', (event) => {
       if (event.target.textContent !== '') {
         return;
       }
@@ -207,21 +210,21 @@ const DisplayController = (() => {
   }
 
   const updateInfo = () => {
-    turnInfo.innerHTML = `
+    getElements().turnInfo.innerHTML = `
     <h2><span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().name}</span>'s Turn</h2>
     <h3>Place your (<span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().input}</span>)</h3>
     `
   }
 
   const winInfo = () => {
-    turnInfo.innerHTML = `
+    getElements().turnInfo.innerHTML = `
     <h2>Game Over!</h2>
     <h3><span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().name}</span> wins! (<span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().input}</span>'s)</h3>
     `
   }
 
   const tieInfo = () => {
-    turnInfo.innerHTML = `
+    getElements().turnInfo.innerHTML = `
     <h2>Game Over!</h2>
     <h3>You tied!</h3>
     `
@@ -232,7 +235,7 @@ const DisplayController = (() => {
     const picker = new Picker(colorPicker);
     picker.onChange = function(color) {
       colorPicker.style.backgroundColor = color.rgbaString;
-      formHeader.style.color = color.rgbaString;
+      getElements().formHeader.style.color = color.rgbaString;
     }
   }
 
@@ -252,8 +255,8 @@ const DisplayController = (() => {
   }
 
   const reset = () => {
-    body.removeChild(turnInfo);
-    body.removeChild(boardContainer);
+    body.removeChild(getElements().turnInfo);
+    body.removeChild(getElements().boardContainer);
   }
 
   const playAgain = () => {
@@ -266,7 +269,7 @@ const DisplayController = (() => {
     const playAgainBtn = document.createElement('button');
     playAgainBtn.setAttribute('class', 'play-again-btn');
     playAgainBtn.textContent = 'Play again';
-    boardContainer.appendChild(playAgainBtn);
+    getElements().boardContainer.appendChild(playAgainBtn);
     playAgainBtn.addEventListener('click', playAgain);
   }
 
