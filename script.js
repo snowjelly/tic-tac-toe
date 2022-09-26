@@ -100,98 +100,16 @@ const Player = (name, input, color) => {
 return {get, updateTurn};
 }
 
-const TicTacToe = (() => {
-  const form = document.querySelector('#form');
-  const formName = document.querySelector('#name');
-  const formInput = document.querySelector('#input');
-  formName.value = '';
-  formInput.value = '';
-  let player1;
-  let player2;
-  let playerName;
-  let playerInput;
-  let playerColor;
-  let playerCount = 0;
-  let player1Input;
-  const playerCreation = (event) => {
-    if (playerCount < 2) {
-      for (i=0;i<event.target.children.length;i++) {
-        if (event.target.children[i].id === 'name') {
-          playerName = event.target.children[i].value;
-        }
-        if (event.target.children[i].id === 'input') {
-          if (playerCount === 0) {
-            playerInput = event.target.children[i].value;
-            player1Input = playerInput;
-          }
-          if (playerCount === 1) {
-            playerInput = event.target.children[i].value;
-            player2Input = playerInput;
-          }
-        }
-        if (event.target.children[i].className === 'color-picker') {
-          if (event.target.children[i].getAttribute('style') !== null) {
-            const colorPickerStyle = event.target.children[i].getAttribute('style');
-            const colorIndex = event.target.children[i].getAttribute('style').indexOf('rgb');
-            playerColor = colorPickerStyle.slice(colorIndex);
-          }
-        }
-      }
-      if (playerCount === 0) {
-        player1 = Player(playerName, playerInput, playerColor);
-      }
-      if (playerCount === 1) {
-        player2 = Player(playerName, playerInput, playerColor);
-      }
-      playerCount++;
-    }
-  }
-
-  const formSubmission = (event) => {
-    event.preventDefault();
-    playerCreation(event);
-    if (playerCount === 1) {
-      TicTacToe.start();
-      DisplayController.renderFormHeader();
-      DisplayController.removeP2InputChoice(player1Input);
-      formName.value = '';
-      DisplayController.colorResetColorPicker();
-    }
-    if (playerCount === 2) {
-      DisplayController.removeIntro();
-      DisplayController.renderBoard();
-    }
-  }
-
-
-  form.addEventListener('submit', formSubmission);
-
-  const getPlayers = () => {
-    return [player1.get(), player2.get()];
-  }
-
-  const start = () => {
-    player1.get().turn = true;
-  }
-
-  const nextTurn = () => {
-    player1.updateTurn();
-    player2.updateTurn();
-  }
-
-  const whosTurn = () => {
-    if (player1.get().turn) return player1.get();
-    return player2.get();
-  }
-
-  return {getPlayers, start, nextTurn, whosTurn};
-})();
-
 const DisplayController = (() => {
   let playerClassToggle = true;
   let playerClass = '';
   const turnInfo = document.createElement('div');
-  const formHeader = document.querySelector('.form-container h1');
+  const formContainer = document.createElement('div');
+  const formHeader = document.createElement('h1');
+  const form = document.createElement('form');
+
+  const intro = document.querySelector('.intro');
+  const body = document.querySelector('body');
   const colorPicker = document.querySelector('.color-picker');
 
   const renderFormHeader = () => {
@@ -199,8 +117,33 @@ const DisplayController = (() => {
     formHeader.style.color = '';
   }
 
+  const renderForm = () => {
+    formContainer.setAttribute('class', 'form-container');
+    formHeader.textContent = 'Player 1';
+    form.setAttribute('id', 'form');
+
+    intro.appendChild(formContainer);
+    formContainer.appendChild(formHeader);
+    formContainer.appendChild(form);
+    form.innerHTML = `
+    <label for="name">Name</label>
+    <input name="name" id="name" type="text" required>
+    <label for="input">Input</label>
+    <select name="input" id="input">
+      <option value="X">X</option>
+      <option value="O">O</option>
+    </select>
+    <p>Color</p>
+    <div class="color-picker"></div>
+    <button>Join game</button>
+    `
+  }
+
+  const getForm = () => {
+    return form;
+  }
+
   const removeIntro = () => {
-    const intro = document.querySelector('.intro');
     intro.remove();
   }
 
@@ -214,7 +157,6 @@ const DisplayController = (() => {
   }
 
   const renderBoard = () => {
-    const body = document.querySelector('body');
     const boardContainer = document.createElement('div');
     const board = document.createElement('div');
 
@@ -299,9 +241,97 @@ const DisplayController = (() => {
   const colorResetColorPicker = () => {
     colorPicker.style.backgroundColor = '';
   }
-  return {renderBoard, renderColorPicker, renderFormHeader, removeIntro, removeP2InputChoice, colorResetColorPicker};
+  return {renderBoard, renderColorPicker, renderForm, renderFormHeader, removeIntro, removeP2InputChoice, colorResetColorPicker, getForm};
+})();
+
+const TicTacToe = (() => {
+  let player1;
+  let player2;
+  let playerName;
+  let playerInput;
+  let playerColor;
+  let playerCount = 0;
+  let player1Input;
+
+  const form = DisplayController.getForm();
+  const formName = document.querySelector('#name');
+  const formInput = document.querySelector('#input');
+
+  const playerCreation = (event) => {
+    if (playerCount < 2) {
+      for (i=0;i<event.target.children.length;i++) {
+        if (event.target.children[i].id === 'name') {
+          playerName = event.target.children[i].value;
+        }
+        if (event.target.children[i].id === 'input') {
+          if (playerCount === 0) {
+            playerInput = event.target.children[i].value;
+            player1Input = playerInput;
+          }
+          if (playerCount === 1) {
+            playerInput = event.target.children[i].value;
+            player2Input = playerInput;
+          }
+        }
+        if (event.target.children[i].className === 'color-picker') {
+          if (event.target.children[i].getAttribute('style') !== null) {
+            const colorPickerStyle = event.target.children[i].getAttribute('style');
+            const colorIndex = event.target.children[i].getAttribute('style').indexOf('rgb');
+            playerColor = colorPickerStyle.slice(colorIndex);
+          }
+        }
+      }
+      if (playerCount === 0) {
+        player1 = Player(playerName, playerInput, playerColor);
+      }
+      if (playerCount === 1) {
+        player2 = Player(playerName, playerInput, playerColor);
+      }
+      playerCount++;
+    }
+  }
+
+  const formSubmission = (event) => {
+    event.preventDefault();
+    playerCreation(event);
+    if (playerCount === 1) {
+      TicTacToe.start();
+      DisplayController.renderFormHeader();
+      DisplayController.removeP2InputChoice(player1Input);
+      formName.value = '';
+      DisplayController.colorResetColorPicker();
+    }
+    if (playerCount === 2) {
+      DisplayController.removeIntro();
+      DisplayController.renderBoard();
+    }
+  }
+
+  form.addEventListener('submit', formSubmission);
+
+  const getPlayers = () => {
+    return [player1.get(), player2.get()];
+  }
+
+  const start = () => {
+    player1.get().turn = true;
+  }
+
+  const nextTurn = () => {
+    player1.updateTurn();
+    player2.updateTurn();
+  }
+
+  const whosTurn = () => {
+    if (player1.get().turn) return player1.get();
+    return player2.get();
+  }
+
+  return {getPlayers, start, nextTurn, whosTurn};
 })();
 
 
 
+DisplayController.renderForm();
 DisplayController.renderColorPicker();
+
