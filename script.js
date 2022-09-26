@@ -310,7 +310,6 @@ const TicTacToe = (() => {
           }
           if (playerCount === 1) {
             playerInput = event.target.children[i].value;
-            player2Input = playerInput;
           }
         }
         if (event.target.children[i].className === 'color-picker') {
