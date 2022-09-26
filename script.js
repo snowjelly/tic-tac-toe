@@ -123,21 +123,28 @@ const DisplayController = (() => {
   }
 
   const renderFormHeader = () => {
-    getElements().formHeader.textContent = 'Player 2';
-    getElements().formHeader.style.color = '';
+    const formHeader = getElements().formHeader;
+
+    formHeader.textContent = 'Player 2';
+    formHeader.style.color = '';
   }
 
   const renderForm = () => {
-    getElements().intro.setAttribute('class', 'intro');
-    getElements().formContainer.setAttribute('class', 'form-container');
-    getElements().formHeader.textContent = 'Player 1';
-    getElements().form.setAttribute('id', 'form');
+    const intro = getElements().intro;
+    const formContainer = getElements().formContainer;
+    const formHeader = getElements().formHeader;
+    const form = getElements().form;
 
-    body.appendChild(getElements().intro);
-    getElements().intro.appendChild(formContainer);
-    getElements().formContainer.appendChild(getElements().formHeader);
-    getElements().formContainer.appendChild(form);
-    getElements().form.innerHTML = `
+    intro.setAttribute('class', 'intro');
+    formContainer.setAttribute('class', 'form-container');
+    formHeader.textContent = 'Player 1';
+    form.setAttribute('id', 'form');
+
+    body.appendChild(intro);
+    intro.appendChild(formContainer);
+    formContainer.appendChild(formHeader);
+    formContainer.appendChild(form);
+    form.innerHTML = `
     <label for="name">Name</label>
     <input name="name" id="name" type="text" required>
     <label for="input">Input</label>
@@ -153,11 +160,13 @@ const DisplayController = (() => {
   }
 
   const getForm = () => {
-    return getElements().form;
+    const form = getElements().form;
+    return form;
   }
 
   const removeIntro = () => {
-    getElements().intro.remove();
+    const intro = getElements().intro;
+    intro.remove();
   }
 
   const removeP2InputChoice = ([player1Input]) => {
@@ -170,12 +179,16 @@ const DisplayController = (() => {
   }
 
   const renderBoard = () => {
-    getElements().boardContainer.setAttribute('class', 'board-container');
-    getElements().board.setAttribute('class', 'board');
-    getElements().turnInfo.setAttribute('class', 'info');
-    body.appendChild(getElements().turnInfo);
-    body.appendChild(getElements().boardContainer);
-    getElements().boardContainer.appendChild(getElements().board);
+    const boardContainer = getElements().boardContainer;
+    const board = getElements().board;
+    const turnInfo = getElements().turnInfo;
+
+    boardContainer.setAttribute('class', 'board-container');
+    board.setAttribute('class', 'board');
+    turnInfo.setAttribute('class', 'info');
+    body.appendChild(turnInfo);
+    body.appendChild(boardContainer);
+    boardContainer.appendChild(board);
 
     for (i=0;i<9;i++) {
       const btn = document.createElement('button');
@@ -184,7 +197,7 @@ const DisplayController = (() => {
     }
     updateInfo();
 
-    getElements().board.addEventListener('click', (event) => {
+    board.addEventListener('click', (event) => {
       if (event.target.textContent !== '') {
         return;
       }
@@ -210,21 +223,27 @@ const DisplayController = (() => {
   }
 
   const updateInfo = () => {
-    getElements().turnInfo.innerHTML = `
+    const turnInfo = getElements().turnInfo;
+
+    turnInfo.innerHTML = `
     <h2><span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().name}</span>'s Turn</h2>
     <h3>Place your (<span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().input}</span>)</h3>
     `
   }
 
   const winInfo = () => {
-    getElements().turnInfo.innerHTML = `
+    const turnInfo = getElements().turnInfo;
+
+    turnInfo.innerHTML = `
     <h2>Game Over!</h2>
     <h3><span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().name}</span> wins! (<span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().input}</span>'s)</h3>
     `
   }
 
   const tieInfo = () => {
-    getElements().turnInfo.innerHTML = `
+    const turnInfo = getElements().turnInfo;
+
+    turnInfo.innerHTML = `
     <h2>Game Over!</h2>
     <h3>You tied!</h3>
     `
@@ -233,9 +252,11 @@ const DisplayController = (() => {
   const renderColorPicker = () => {
     const colorPicker = getColorPicker();
     const picker = new Picker(colorPicker);
+    const formHeader = getElements().formHeader;
+
     picker.onChange = function(color) {
       colorPicker.style.backgroundColor = color.rgbaString;
-      getElements().formHeader.style.color = color.rgbaString;
+      formHeader.style.color = color.rgbaString;
     }
   }
 
