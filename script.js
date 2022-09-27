@@ -224,7 +224,7 @@ const DisplayController = (() => {
   }
 
   const updateInfo = () => {
-    const turnInfo = getElements().turnInfo;
+    const turnInfo = document.querySelector('.info');
 
     turnInfo.innerHTML = `
     <h2><span style="color: ${TicTacToe.whosTurn().color}">${TicTacToe.whosTurn().name}</span>'s Turn</h2>
@@ -233,7 +233,7 @@ const DisplayController = (() => {
   }
 
   const winInfo = () => {
-    const turnInfo = getElements().turnInfo;
+    const turnInfo = document.querySelector('.info');
 
     turnInfo.innerHTML = `
     <h2>Game Over!</h2>
@@ -242,7 +242,7 @@ const DisplayController = (() => {
   }
 
   const tieInfo = () => {
-    const turnInfo = getElements().turnInfo;
+    const turnInfo = document.querySelector('.info');
 
     turnInfo.innerHTML = `
     <h2>Game Over!</h2>
