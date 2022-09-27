@@ -157,7 +157,7 @@ const DisplayController = (() => {
     <button>Join game</button>
     `
     renderColorPicker();
-    form.addEventListener('submit', formSubmission);
+    form.addEventListener('submit', TicTacToe.formSubmission);
   }
 
   const getForm = () => {
@@ -299,17 +299,16 @@ const DisplayController = (() => {
 })();
 
 const TicTacToe = (() => {
-  let player1;
-  let player2;
-  let playerName;
-  let playerInput;
-  let playerColor;
-  let playerCount = 0;
-  let player1Input;
-
-  const form = DisplayController.getForm();
+  const players = [];
 
   const playerCreation = (event) => {
+    let playerName = '';
+    let playerInput = '';
+    let playerColor = '';
+    let playerCount = 0;
+    let player1Input = '';
+
+    setPlayerCount(playerCount);
     if (playerCount < 2) {
       for (i=0;i<event.target.children.length;i++) {
         if (event.target.children[i].id === 'name') {
@@ -333,16 +332,58 @@ const TicTacToe = (() => {
         }
       }
       if (playerCount === 0) {
-        player1 = Player(playerName, playerInput, playerColor);
+        const player1 = Player(playerName, playerInput, playerColor);
+        players.push(player1);
       }
       if (playerCount === 1) {
-        player2 = Player(playerName, playerInput, playerColor);
+        const player2 = Player(playerName, playerInput, playerColor);
+        players.push(player2);
       }
       playerCount++;
     }
   }
 
+  /*
+    let player1;
+    let player2;
+    
+    
+    
+    
+    
+  */
+
+  const setPlayer1 = (player1) => {
+    let setPlayer1;
+    if (player1 !== true) {
+      setPlayer1 = player1;
+    }
+    else if (player1 === true) {
+      return setPlayer1;
+    }
+  }
+
+  const getPlayer1 = () => {
+    return players[0];
+  }
+
+  const setPlayerCount = (playerCount) => {
+    let setPlayerCount;
+    if (playerCount !== true) {
+      setPlayerCount = playerCount;
+    }
+    else if (playerCount === true) {
+      return setPlayerCount;
+    }
+  }
+
+  const getPlayerCount = () => {
+    const playerCount = setPlayerCount(true);
+    return playerCount;
+  }
+
   const formSubmission = (event) => {
+    const playerCount = getPlayerCount();
     event.preventDefault();
     playerCreation(event);
     if (playerCount === 1) {
@@ -356,10 +397,6 @@ const TicTacToe = (() => {
       DisplayController.removeIntro();
       DisplayController.renderBoard();
     }
-  }
-
-  const getPlayers = () => {
-    return [player1.get(), player2.get()];
   }
 
   const start = () => {
@@ -376,7 +413,7 @@ const TicTacToe = (() => {
     return player2.get();
   }
 
-  return {getPlayers, start, nextTurn, whosTurn, formSubmission};
+  return {start, nextTurn, whosTurn, formSubmission, getPlayer1};
 })();
 
 
