@@ -342,18 +342,21 @@ const TicTacToe = (() => {
     }
   }
 
-  const getPlayer1 = () => {
+  const player1 = () => {
     return players[0];
   }
 
+  const player2 = () => {
+    return players[1];
+  }
+
   const formSubmission = (event) => {
-    const playerCount = getPlayerCount();
     event.preventDefault();
     playerCreation(event);
     if (playerCount === 1) {
       TicTacToe.start();
       DisplayController.renderFormHeader();
-      DisplayController.removeP2InputChoice(player1Input);
+      //DisplayController.removeP2InputChoice(player1Input);
       DisplayController.resetForm();
       DisplayController.resetColorPicker();
     }
@@ -364,20 +367,20 @@ const TicTacToe = (() => {
   }
 
   const start = () => {
-    player1.get().turn = true;
+    player1().get().turn = true;
   }
 
   const nextTurn = () => {
-    player1.updateTurn();
-    player2.updateTurn();
+    player1().updateTurn();
+    player2().updateTurn();
   }
 
   const whosTurn = () => {
-    if (player1.get().turn) return player1.get();
-    return player2.get();
+    if (player1().get().turn) return player1().get();
+    return player2().get();
   }
 
-  return {start, nextTurn, whosTurn, formSubmission, getPlayer1};
+  return {start, nextTurn, whosTurn, formSubmission, player1, player2};
 })();
 
 
