@@ -194,7 +194,7 @@ const DisplayController = (() => {
     for (i=0;i<9;i++) {
       const btn = document.createElement('button');
       btn.setAttribute('data-position', i.toString());
-      getElements().board.appendChild(btn);
+      board.appendChild(btn);
     }
     updateInfo();
 
@@ -362,7 +362,7 @@ const TicTacToe = (() => {
     }
     if (playerCount === 2) {
       DisplayController.removeIntro();
-      //DisplayController.renderBoard();
+      DisplayController.renderBoard();
     }
   }
 
