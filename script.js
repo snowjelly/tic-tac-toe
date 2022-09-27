@@ -301,12 +301,12 @@ const DisplayController = (() => {
 const TicTacToe = (() => {
   const players = [];
   let playerCount = 0;
+  let player1Input = '';
 
   const playerCreation = (event) => {
     let playerName = '';
     let playerInput = '';
     let playerColor = '';
-    let player1Input = '';
 
     if (playerCount < 2) {
       for (i=0;i<event.target.children.length;i++) {
@@ -356,7 +356,7 @@ const TicTacToe = (() => {
     if (playerCount === 1) {
       TicTacToe.start();
       DisplayController.renderFormHeader();
-      //DisplayController.removeP2InputChoice(player1Input);
+      DisplayController.removeP2InputChoice(player1Input);
       DisplayController.resetForm();
       DisplayController.resetColorPicker();
     }
