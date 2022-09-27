@@ -277,8 +277,10 @@ const DisplayController = (() => {
   }
 
   const reset = () => {
-    body.removeChild(getElements().turnInfo);
-    body.removeChild(getElements().boardContainer);
+    const turnInfo = document.querySelector('.info');
+    const boardContainer = document.querySelector('.board-container');
+    body.removeChild(turnInfo);
+    body.removeChild(boardContainer);
   }
 
   const playAgain = () => {
@@ -288,10 +290,11 @@ const DisplayController = (() => {
   }
 
   const renderPlayAgainBtn = () => {
+    const boardContainer = document.querySelector('.board-container');
     const playAgainBtn = document.createElement('button');
     playAgainBtn.setAttribute('class', 'play-again-btn');
     playAgainBtn.textContent = 'Play again';
-    getElements().boardContainer.appendChild(playAgainBtn);
+    boardContainer.appendChild(playAgainBtn);
     playAgainBtn.addEventListener('click', playAgain);
   }
 
