@@ -300,15 +300,14 @@ const DisplayController = (() => {
 
 const TicTacToe = (() => {
   const players = [];
+  let playerCount = 0;
 
   const playerCreation = (event) => {
     let playerName = '';
     let playerInput = '';
     let playerColor = '';
-    let playerCount = 0;
     let player1Input = '';
 
-    setPlayerCount(playerCount);
     if (playerCount < 2) {
       for (i=0;i<event.target.children.length;i++) {
         if (event.target.children[i].id === 'name') {
@@ -343,43 +342,8 @@ const TicTacToe = (() => {
     }
   }
 
-  /*
-    let player1;
-    let player2;
-    
-    
-    
-    
-    
-  */
-
-  const setPlayer1 = (player1) => {
-    let setPlayer1;
-    if (player1 !== true) {
-      setPlayer1 = player1;
-    }
-    else if (player1 === true) {
-      return setPlayer1;
-    }
-  }
-
   const getPlayer1 = () => {
     return players[0];
-  }
-
-  const setPlayerCount = (playerCount) => {
-    let setPlayerCount;
-    if (playerCount !== true) {
-      setPlayerCount = playerCount;
-    }
-    else if (playerCount === true) {
-      return setPlayerCount;
-    }
-  }
-
-  const getPlayerCount = () => {
-    const playerCount = setPlayerCount(true);
-    return playerCount;
   }
 
   const formSubmission = (event) => {
