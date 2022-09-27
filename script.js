@@ -123,7 +123,7 @@ const DisplayController = (() => {
   }
 
   const renderFormHeader = () => {
-    const formHeader = getElements().formHeader;
+    const formHeader = document.querySelector('.form-container h1');
 
     formHeader.textContent = 'Player 2';
     formHeader.style.color = '';
