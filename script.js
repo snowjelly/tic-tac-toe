@@ -166,7 +166,7 @@ const DisplayController = (() => {
   }
 
   const removeIntro = () => {
-    const intro = getElements().intro;
+    const intro = document.querySelector('.intro');
     intro.remove();
   }
 
@@ -362,7 +362,7 @@ const TicTacToe = (() => {
     }
     if (playerCount === 2) {
       DisplayController.removeIntro();
-      DisplayController.renderBoard();
+      //DisplayController.renderBoard();
     }
   }
 
