@@ -283,26 +283,20 @@ const DisplayController = (() => {
     body.removeChild(boardContainer);
   }
 
-  const playAgain = () => {
-    reset();
-    GameBoard.resetBoard();
-    renderForm();
-  }
-
   const renderPlayAgainBtn = () => {
     const boardContainer = document.querySelector('.board-container');
     const playAgainBtn = document.createElement('button');
     playAgainBtn.setAttribute('class', 'play-again-btn');
     playAgainBtn.textContent = 'Play again';
     boardContainer.appendChild(playAgainBtn);
-    playAgainBtn.addEventListener('click', playAgain);
+    playAgainBtn.addEventListener('click', TicTacToe.playAgain);
   }
 
   return {renderBoard, renderColorPicker, renderForm, resetForm, renderFormHeader, removeIntro, removeP2InputChoice, resetColorPicker, getForm, reset};
 })();
 
 const TicTacToe = (() => {
-  const players = [];
+  let players = [];
   let playerCount = 0;
   let player1Input = '';
 
@@ -383,7 +377,19 @@ const TicTacToe = (() => {
     return player2().get();
   }
 
-  return {start, nextTurn, whosTurn, formSubmission, player1, player2};
+  const resetPlayerData = () => {
+    players = [];
+    playerCount = 0;
+  }
+
+  const playAgain = () => {
+    DisplayController.reset();
+    GameBoard.resetBoard();
+    resetPlayerData();
+    DisplayController.renderForm();
+  }
+
+  return {start, nextTurn, whosTurn, formSubmission, player1, player2, playAgain};
 })();
 
 
